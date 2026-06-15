@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Tracker</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>&#x1F4CA; Portfolio Tracker</h1>
+    <div class="header-controls">
+      <label for="baseCurrency">Base Currency</label>
+      <select id="baseCurrency">
+        <option value="AUD">AUD</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
+        <option value="HKD">HKD</option>
+        <option value="CNY">CNY</option>
+        <option value="SGD">SGD</option>
+        <option value="CAD">CAD</option>
+        <option value="NZD">NZD</option>
+      </select>
+      <button id="refreshBtn" onclick="loadPortfolio()">&#x21BB; Refresh</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Add Holding -->
+    <section class="add-holding-section">
+      <h2>Add Holding</h2>
+      <form id="addForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ticker">Ticker</label>
+            <input type="text" id="ticker" placeholder="e.g. AAPL, CBA.AX" required>
+          </div>
+          <div class="form-group">
+            <label for="currency">Currency</label>
+            <input type="text" id="currency" placeholder="Auto-detected" readonly>
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" min="0.0001" step="any" placeholder="0" required>
+          </div>
+          <button type="submit" id="addBtn">+ Add</button>
+        </div>
+        <div id="tickerPreview" class="ticker-preview hidden"></div>
+      </form>
+    </section>
+
+    <!-- Holdings Table -->
+    <section class="holdings-section">
+      <h2>Holdings</h2>
+      <div class="table-wrapper">
+        <table id="holdingsTable" class="hidden">
+          <thead>
+            <tr>
+              <th>Ticker</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Region</th>
+              <th>Style</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Value</th>
+              <th>Weight</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="holdingsBody"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="7" class="total-label">Total</td>
+              <td id="totalValue" class="total-value"></td>
+              <td class="total-value">100%</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <p id="emptyMessage" class="empty-message">No holdings yet. Add your first holding above.</p>
+    </section>
+
+    <!-- Allocation Charts -->
+    <section class="charts-section">
+      <div class="chart-card">
+        <h3>Asset Allocation</h3>
+        <p class="chart-subtitle">Stock / Bond / REIT / Cash</p>
+        <canvas id="assetTypeChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Geographic Exposure</h3>
+        <p class="chart-subtitle">US / Australia / Asia / Europe</p>
+        <canvas id="regionChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Investment Style</h3>
+        <p class="chart-subtitle">Large/Mid/Small Cap &times; Value/Blend/Growth</p>
+        <canvas id="styleChart"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
